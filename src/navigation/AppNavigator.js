@@ -19,6 +19,14 @@ import {Linking} from "expo";
 import {Text} from "react-native-paper";
 import StackedUrlMatcher from "../components/Screens/StackedUrlMatcher";
 import Success from "../components/FormDisplay/Success";
+import DropInHTML from "../UseCase/ProductPageInHtml/DropInHTML";
+import DropInCheckoutURL from "../UseCase/ProductPageInNative/DropInCheckoutURL";
+import CheckoutURLWebview from "../UseCase/ProductPageInNative/CheckoutURLWebview";
+import ApiCheckout from "../UseCase/ApiNativeProductPage/ApiCheckout";
+import UserInformation from "../UseCase/ApiNativeProductPage/UserInformation";
+import ComponentsBasic from "../UseCase/ApiHtmlUserInformationPage/ComponentsBasic";
+import ComponentsWithProgrammaticActions from "../UseCase/ApiHtmlProgrammaticActions/ComponentsWithProgrammaticActions";
+import ComponentsWithEventListeners from "../UseCase/ApiHtmlEventListeners/ComponentsWithEventListeners";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -78,11 +86,48 @@ export default function AppContainer() {
                 <Stack.Screen
                     name="Thankyou"
                     component={Success}
+                    options={{title: "Success"}}
                 />
-                {/*<Stack.Screen*/}
-                {/*    name="Thankyou"*/}
-                {/*    component={Contained}*/}
-                {/*/>*/}
+                <Stack.Screen
+                    name="DropInHTML"
+                    component={DropInHTML}
+                    options={{title: "Honey Comics"}}
+                />
+                <Stack.Screen
+                    name="DropInCheckoutURL"
+                    component={DropInCheckoutURL}
+                    options={{title: "Honey Comics"}}
+                />
+                <Stack.Screen
+                    name="CheckoutURLWebview"
+                    component={CheckoutURLWebview}
+                    options={{title: "Honey Comics"}}
+                />
+                <Stack.Screen
+                    name="ApiCheckout"
+                    component={ApiCheckout}
+                    options={{title: "Honey Comics"}}
+                />
+                <Stack.Screen
+                    name="UserInformation"
+                    component={UserInformation}
+                    options={{title: "Tell us about yourself"}}
+                />
+                <Stack.Screen
+                    name="ComponentsBasic"
+                    component={ComponentsBasic}
+                    options={{title: "Checkout"}}
+                />
+                <Stack.Screen
+                    name="ComponentsProgrammaticActions"
+                    component={ComponentsWithProgrammaticActions}
+                    options={{title: "Checkout"}}
+                />
+                <Stack.Screen
+                    name="ComponentsEventListeners"
+                    component={ComponentsWithEventListeners}
+                    options={{title: "Checkout"}}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );

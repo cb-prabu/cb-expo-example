@@ -4,26 +4,6 @@ import {WebView} from 'react-native-webview';
 
 const myHtmlFile = require('./index.html');
 export default class ScriptedWeb extends Component {
-    // onAndroidBackPress = () => {
-    //     if (this.webView.canGoBack && this.webView.ref) {
-    //         this.webView.ref.goBack();
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    //
-    // componentDidMount() {
-    //     if (Platform.OS === 'android') {
-    //         BackHandler.addEventListener('hardwareBackPress', this.onAndroidBackPress);
-    //     }
-    // }
-    //
-    // componentWillUnmount() {
-    //     if (Platform.OS === 'android') {
-    //         BackHandler.removeEventListener('hardwareBackPress');
-    //     }
-    // }
-
     render() {
         return (
             <WebView
@@ -33,7 +13,7 @@ export default class ScriptedWeb extends Component {
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
                 startInLoadingState={true}
-                injectedJavaScript={this.script()}
+                // injectedJavaScript={this.script()}
             />
         );
     }
