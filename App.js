@@ -1,29 +1,23 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
 // You can import from local files
 // import AssetExample from './components/AssetExample';
 // or any pure javascript modules available in npm
 import AppContainer from "./src/navigation/AppNavigator";
+import {DefaultTheme, Provider as PaperProvider, Colors} from 'react-native-paper';
+
+const theme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: '#66afe9',
+    },
+};
 
 export default function App() {
     return (
-        <AppContainer/>
+        <PaperProvider theme={theme}>
+            <AppContainer/>
+        </PaperProvider>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingTop: 20,
-        backgroundColor: '#ecf0f1',
-        padding: 8,
-    },
-    paragraph: {
-        margin: 24,
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-});

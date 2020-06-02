@@ -5,8 +5,13 @@ import {useState} from "react";
 import {Asset} from "expo-asset";
 
 const logoUri = Asset.fromModule(require('../../../assets/comic-book.png')).uri;
+const planWithAddonsAndBasicUserDetails = 'https://honeycomics-v3-test.chargebee.com/hosted_pages/plans/comics-box?' +
+    'coupon_ids[0]=cbdemo_earlybird&addons[id][0]=extra-comic-book&addons[quantity][0]=2' +
+    '&customer[email]=vivek@chargebee.com&customer[cf_test]=customer%20custom%20field' +
+    '&customer[cf_date]=1991-09-16&subscription[cf_sub_test]=subscription%20custom%20field';
+
 export default function DropInCheckoutURL({navigation}) {
-    const [comicPlan] = useState('https://honeycomics-v3-test.chargebee.com/hosted_pages/plans/comics-box?coupon_ids[0]=cbdemo_earlybird&addons[id][0]=extra-comic-book&addons[quantity][0]=2&customer[email]=vivek@chargebee.com&customer[cf_test]=customer%20custom%20field&customer[cf_date]=1991-09-16&subscription[cf_sub_test]=subscription%20custom%20field&hp_opener=chargebee&hp_referrer=https://www.recur.in');
+    const [comicPlan] = useState(planWithAddonsAndBasicUserDetails);
 
     const subscribePlan = (planUrl) => {
         console.log('Subscribe clicked');
@@ -17,13 +22,13 @@ export default function DropInCheckoutURL({navigation}) {
         <SafeAreaView>
             <ScrollView>
                 <View>
-                    <Headline style={{...styles.titleText}}>Honey Comics</Headline>
+                    <Headline style={styles.titleText}>Honey Comics</Headline>
                     <Headline>
                         <Text style={{textAlign: 'center'}}>
                             <Text style={styles.titleGreyText}>
                                 Subscribe with a fake card and a fake address, We'll deliver our fake
                             </Text>
-                            <Text style={{...styles.titleText}}> comics </Text>
+                            <Text style={styles.titleText}> comics </Text>
                             <Text style={styles.titleGreyText}>On Time!</Text>
                         </Text>
                         <Text>{"\n"}</Text>
