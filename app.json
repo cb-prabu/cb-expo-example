@@ -24,7 +24,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "scheme": "mycharger",
+    "scheme": "cbexposample",
     "android": {
       "intentFilters": [
         {
