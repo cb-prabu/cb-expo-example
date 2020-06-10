@@ -1,6 +1,7 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
-import {StackActions} from "@react-navigation/native";
+import {URL_LISTENER} from "../../utils/UrlListener";
+import {redirectIfSubscriptionComplete} from "../../utils/SuccessHandler";
 
 export default function ApiCheckout({navigation, route}) {
     let webview = null;
@@ -15,14 +16,6 @@ export default function ApiCheckout({navigation, route}) {
         </html>
     `;
 
-    const handleWebViewNavigationStateChange = (newNavState) => {
-        if (newNavState && newNavState.url.includes('thankyou')) {
-            navigation.dispatch(
-                StackActions.replace('Thankyou')
-            );
-        }
-    }
-
     return (<WebView
         ref={ref => (webview = ref)}
         originWhitelist={['*']}
@@ -31,8 +24,12 @@ export default function ApiCheckout({navigation, route}) {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         startInLoadingState={true}
-        injectedJavaScript={openCheckout(route.params.hostedPageResponse)}
-        onNavigationStateChange={handleWebViewNavigationStateChange}
+        injectedJavaScript={URL_LISTENER + openCheckout(route.params.hostedPageResponse)}
+        onMessage={({nativeEvent}) => {
+            if (nativeEvent.data === "navigationStateChange") {
+                redirectIfSubscriptionComplete(navigation, nativeEvent.url)
+            }
+        }}
     />);
 }
 

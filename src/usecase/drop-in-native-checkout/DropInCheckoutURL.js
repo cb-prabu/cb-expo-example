@@ -21,7 +21,7 @@ export default function DropInCheckoutURL({navigation}) {
     return (
         <SafeAreaView>
             <ScrollView>
-                <View>
+                <View style={{marginHorizontal: 30}}>
                     <Headline style={styles.titleText}>Honey Comics</Headline>
                     <Headline>
                         <Text style={{textAlign: 'center'}}>
@@ -56,7 +56,7 @@ export default function DropInCheckoutURL({navigation}) {
                     <Paragraph style={{textAlign: 'center'}}>The comics you love. Unlimited access. One convenient
                         subscription.</Paragraph>
                     <Text>{"\n"}</Text>
-                    <Text style={{textAlign: 'center'}}>Honey Comics. All Rights Reserved.</Text>
+                    <Text style={{textAlign: 'center'}}>© Honey Comics. All Rights Reserved.</Text>
                 </View>
             </ScrollView>
         </SafeAreaView>

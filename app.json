@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-js",
-    "slug": "expo-js",
+    "name": "cb-expo-sample",
+    "slug": "cb-expo-sample",
     "platforms": [
       "ios",
       "android",

@@ -1,6 +1,10 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
-import {StackActions} from "@react-navigation/native";
+import {Asset} from "expo-asset";
+import {URL_LISTENER} from "../../utils/UrlListener";
+import {redirectIfSubscriptionComplete} from "../../utils/SuccessHandler";
+
+const logoUri = Asset.fromModule(require('../../../assets/comic-book.png')).uri;
 
 export default function DropInHtml({navigation}) {
     const page = `
@@ -231,7 +235,7 @@ export default function DropInHtml({navigation}) {
             </div>    
         </div>
         <div class="jumbotron comic-book text-center">
-        <img src="https://www.recur.in/drop-in/assets/images/comic-book.png" alt="comic book" class="center-block img-responsive">
+        <img src=${logoUri} alt="comic book" class="center-block img-responsive">
         
             <a href="javascript:void(0)" class="btn btn-success btn-lg" data-cb-type="checkout" data-cb-plan-id="comics-box">subscribe</a>
         </div>
@@ -248,14 +252,6 @@ export default function DropInHtml({navigation}) {
         </html>
     `;
 
-    const handleWebViewNavigationStateChange = (newNavState) => {
-        if (newNavState && newNavState.url.includes('thankyou')) {
-            navigation.dispatch(
-                StackActions.replace('Thankyou')
-            );
-        }
-    }
-
     return (<WebView
         originWhitelist={['*']}
         source={{html: page}}
@@ -263,8 +259,13 @@ export default function DropInHtml({navigation}) {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         startInLoadingState={true}
-        onNavigationStateChange={handleWebViewNavigationStateChange}
-        injectedJavaScript={addAddonsToSubscription()}
+        injectedJavaScript={URL_LISTENER + addAddonsToSubscription()}
+        onMessage={({nativeEvent}) => {
+            console.log('now or never', nativeEvent)
+            if (nativeEvent.data === "navigationStateChange") {
+                redirectIfSubscriptionComplete(navigation, nativeEvent.url)
+            }
+        }}
     />);
 }
 
@@ -280,7 +281,7 @@ function addAddonsToSubscription() {
         product.addons.push({id: "extra-comic-book", quantity: 2});
     
         // to add coupon
-        product.addCoupon("cbdemo_earlybird");
+        product.addCoupon('cbdemo_earlybird');
     
         // adding subscription custom fields
         product.data["cf_sub_test"] = "subscription custom field";
@@ -289,35 +290,6 @@ function addAddonsToSubscription() {
         var cart = cbInstance.getCart();
         // Date should be in YYYY-MM-DD
         cart.setCustomer({email: "vivek@chargebee.com", cf_test: "customer custom field", cf_date: "1991-09-16"});
-    
-        cbInstance.setCheckoutCallbacks(function(cart) {
-            // You can get the plan name for which the checkout happened like below
-            var product = cart.products[0];
-            // alert('Here');
-            console.log(product.planId);
-            console.log(product.addons);
-            return {
-                loaded: function() {
-                    console.log("checkout opened");
-                },
-                close: function() {
-                    console.log("checkout closed");
-                },
-                success: function(hostedPageId) {
-                    console.log(hostedPageId);
-                    // Hosted page id will be unique token for the checkout that happened
-                    // You can pass this hosted page id to your backend 
-                    // and then call our retrieve hosted page api to get subscription details
-                    // https://apidocs.chargebee.com/docs/api/hosted_pages#retrieve_a_hosted_page
-                },
-                step: function(value) {
-                    // value -> which step in checkout
-                    console.log(value);
-                    alert('123');
-                }
-            }
-        });
     });
-
     `;
 }

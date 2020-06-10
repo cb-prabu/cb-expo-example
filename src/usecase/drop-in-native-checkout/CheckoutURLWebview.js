@@ -1,20 +1,13 @@
 import * as React from 'react';
 import WebView from "react-native-webview";
-import {StackActions} from "@react-navigation/native";
+import {redirectIfSubscriptionComplete} from "../../utils/SuccessHandler";
+import {URL_LISTENER} from "../../utils/UrlListener";
 
 export default function CheckoutURLWebview({navigation, route}) {
     let webview;
-    const handleWebViewNavigationStateChange = (newNavState) => {
-        if (newNavState && newNavState.url.includes('thankyou')) {
-            navigation.dispatch(
-                StackActions.replace('Thankyou')
-            );
-        }
-    }
 
     return (
         <WebView
-            onNavigationStateChange={handleWebViewNavigationStateChange}
             ref={ref => (webview = ref)}
             originWhitelist={['*']}
             source={{uri: route.params.planUrl}}
@@ -22,6 +15,12 @@ export default function CheckoutURLWebview({navigation, route}) {
             javaScriptEnabled={true}
             domStorageEnabled={true}
             startInLoadingState={true}
+            injectedJavaScript={URL_LISTENER}
+            onMessage={({nativeEvent}) => {
+                if (nativeEvent.data === "navigationStateChange") {
+                    redirectIfSubscriptionComplete(navigation, nativeEvent.url)
+                }
+            }}
         />
     );
 }

@@ -4,7 +4,7 @@ import * as React from 'react';
 // import AssetExample from './components/AssetExample';
 // or any pure javascript modules available in npm
 import AppContainer from "./src/navigation/AppNavigator";
-import {DefaultTheme, Provider as PaperProvider, Colors} from 'react-native-paper';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 
 const theme = {
     ...DefaultTheme,

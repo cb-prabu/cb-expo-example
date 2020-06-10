@@ -31,7 +31,7 @@ export default function UserInformation({navigation}) {
     return (
         <SafeAreaView>
             <ScrollView>
-                <View style={{padding: 2}}>
+                <View style={{paddingVertical: 2, paddingHorizontal: 10}}>
                     <Image
                         style={{margin: 10}}
                         source={require('../../../assets/logo.png')}/>
