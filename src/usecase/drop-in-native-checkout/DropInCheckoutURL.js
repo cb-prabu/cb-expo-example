@@ -14,7 +14,6 @@ export default function DropInCheckoutURL({navigation}) {
     const [comicPlan] = useState(planWithAddonsAndBasicUserDetails);
 
     const subscribePlan = (planUrl) => {
-        console.log('Subscribe clicked');
         navigation.navigate('CheckoutURLWebview', {planUrl});
     };
 

@@ -261,7 +261,6 @@ export default function DropInHtml({navigation}) {
         startInLoadingState={true}
         injectedJavaScript={URL_LISTENER + addAddonsToSubscription()}
         onMessage={({nativeEvent}) => {
-            console.log('now or never', nativeEvent)
             if (nativeEvent.data === "navigationStateChange") {
                 redirectIfSubscriptionComplete(navigation, nativeEvent.url)
             }
